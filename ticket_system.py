@@ -24,7 +24,20 @@ class Ticket:
         tickets.append(ticket)
         open_tickets.append(ticket)
 
-new=Ticket(int(input("Input staff ID: ")), input("Input auithor's name: "), input("Input contact email: "), input("Input problem descrtiption: "),ticket_id, tickets, open_tickets, closed_tickets)
+    def respond(self):
+        search_id = int(input("Input ID of a ticket you want to respond to: "))
+        for i in open_tickets:
+            for key, value in i.items():
+                if key == search_id:
+                    value["Response"]=input("Input your response: ")
+                    question=input("Do you want to close the ticket ? (y/n): ")
+                    if question=="y":
+                        value["Status"]="Closed"
+                        closed_tickets.append(i)
+                        open_tickets.remove(i)
+
+new=Ticket(int(input("Input staff ID: ")), input("Input author's name: "), input("Input contact email: "), input("Input problem descrtiption: "),ticket_id, tickets, open_tickets, closed_tickets)
 new.add_new()
+new.respond()
 print(tickets)
 print(open_tickets)
