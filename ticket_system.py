@@ -24,48 +24,42 @@ class Ticket:
 #converting all letters in description to lower case
         words = description_lower_case.split()
 #splitting description into a list of single words
-        print(words)
         if "password" in words and "change" in words:
-            print("test")
             ticket_info["Status"] = "Closed"
             ticket_info["Response"] = "Your new password is: " + self.staff_id[:2] + self.creator_name[:3]
         if "password" in words and "change," in words:
-            print("test")
             ticket_info["Status"] = "Closed"
             ticket_info["Response"] = "Your new password is: " + self.staff_id[:2] + self.creator_name[:3]
         if "password," in words and "change" in words:
-            print("test")
             ticket_info["Status"] = "Closed"
             ticket_info["Response"] = "Your new password is: " + self.staff_id[:2] + self.creator_name[:3]
         if "password" in words and "change." in words:
-            print("test")
             ticket_info["Status"] = "Closed"
             ticket_info["Response"] = "Your new password is: " + self.staff_id[:2] + self.creator_name[:3]
         if "password." in words and "change" in words:
-            print("test")
             ticket_info["Status"] = "Closed"
             ticket_info["Response"] = "Your new password is: " + self.staff_id[:2] + self.creator_name[:3]
         if "password" in words and "change?" in words:
-            print("test")
             ticket_info["Status"] = "Closed"
             ticket_info["Response"] = "Your new password is: " + self.staff_id[:2] + self.creator_name[:3]
         if "password?" in words and "change" in words:
-            print("test")
             ticket_info["Status"] = "Closed"
             ticket_info["Response"] = "Your new password is: " + self.staff_id[:2] + self.creator_name[:3]
         if "password" in words and "change!" in words:
-            print("test")
             ticket_info["Status"] = "Closed"
             ticket_info["Response"] = "Your new password is: " + self.staff_id[:2] + self.creator_name[:3]
         if "password!" in words and "change" in words:
-            print("test")
             ticket_info["Status"] = "Closed"
             ticket_info["Response"] = "Your new password is: " + self.staff_id[:2] + self.creator_name[:3]
 #Here i had a choice - i could research "translate" function to remove all punctuation or i could just add some extra variations. I've decided to add more variations.
 #Giving the user new password
         ticket={self.ticket_id:ticket_info}
         tickets.append(ticket)
-        open_tickets.append(ticket)
+        if ticket_info["Status"]=="Open":
+            open_tickets.append(ticket)
+        elif ticket_info["Status"]=="Closed":
+            closed_tickets.append(ticket)
+        print("New ticket created.")
 
     def respond(self):
         search_id = int(input("Input ID of a ticket you want to respond to: "))
@@ -91,15 +85,40 @@ class Ticket:
         for i in tickets:
             for key, value in i.items():
                 if key == search_id:
-                    print(tickets[key-2001])
+                    print("Displaying ticket info:")
+                    print("ID: ", search_id)
+                    print("Staff ID: ", value["Staff ID"])
+                    print("Creator: ", value["Creator Name"])
+                    print("Email: ", value["Contact Email"])
+                    print("Ticket description: ", value["Description"])
+                    print("Status: ", value["Status"])
+                    print("Response: ", value["Response"])
 #due to how the tickets are put into the list, the easiest way to get info would be requesting to print whatever is on the spot corresponding to requested ID-2001. Ex: ID 2005 within the array would be in the position 2005-2001, so position 4
 
     def display_statistics(self):
+        print("Displaying ticket statistics:")
         print("Total number of tickets: ", len(tickets))
         print("Total number of solved tickets: ", len(closed_tickets))
         print("Total number of unsolved tickets: ", len(open_tickets))
 
+    def change_status(self):
+        search_id = int(input("Input ID of a ticket you want to change the status of: "))
+        for i in tickets:
+            for key, value in i.items():
+                if key == search_id:
+                    if value["Status"] == "Open":
+                        question = input("Do you want to close the ticket ? (y/n): ")
+                        if question == "y":
+                            value["Status"] = "Closed"
+                            closed_tickets.append(i)
+                            open_tickets.remove(i)
+                    elif value["Status"] == "Closed":
+                        question = input("Do you want to re-open the ticket ? (y/n): ")
+                        if question == "y":
+                            value["Status"] = "Open"
+                            closed_tickets.remove(i)
+                            open_tickets.append(i)
 
 new=Ticket(input("Input staff ID: "), input("Input author's name: "), input("Input contact email: "), input("Input problem descrtiption: "),ticket_id, tickets, open_tickets, closed_tickets)
 new.add_new()
-print(tickets)
+new.search_ticket()
