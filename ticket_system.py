@@ -15,7 +15,7 @@ class Ticket:
         self.closed_tickets=closed_tickets
 
     def add_new(self):
-        self.ticket_id=len(self.tickets)+1
+        self.ticket_id=len(self.tickets)+2001
         #generating ID for the ticket
         response="Not yet provided"
         ticket_info={"Staff ID": self.staff_id,"Creator Name":self.creator_name, "Contact Email":self.email,"Description":self.description,"Status": "Open", "Response":response}
@@ -36,8 +36,14 @@ class Ticket:
                         closed_tickets.append(i)
                         open_tickets.remove(i)
 
+    def search_ticket(self):
+        search_id = int(input("Input ID of a ticket you want to view: "))
+        for i in tickets:
+            for key, value in i.items():
+                if key == search_id:
+                    print(tickets[key-2001])
+
+
 new=Ticket(int(input("Input staff ID: ")), input("Input author's name: "), input("Input contact email: "), input("Input problem descrtiption: "),ticket_id, tickets, open_tickets, closed_tickets)
 new.add_new()
-new.respond()
-print(tickets)
-print(open_tickets)
+new.search_ticket()
