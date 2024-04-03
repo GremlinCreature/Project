@@ -3,7 +3,6 @@ def main():
     tickets=[]
     open_tickets=[]
     closed_tickets=[]
-    #calling ticket ID and all the tickets dictionaries now for later use
     class Ticket:
         def __init__(self, staff_id, creator_name, email, description, ticket_id, tickets, open_tickets, closed_tickets):
             self.staff_id=staff_id
@@ -17,12 +16,10 @@ def main():
 
         def add_new(self):
             self.ticket_id=len(self.tickets)+2001
-    #generating ID for the ticket
             response="Not yet provided"
             ticket_info={"Staff ID": self.staff_id,"Creator Name":self.creator_name, "Contact Email":self.email,"Description":self.description,"Status": "Open", "Response":response}
     #creating a dictionary with ticket info
             description_lower_case=self.description.lower()
-    #converting all letters in description to lower case
             words = description_lower_case.split()
     #splitting description into a list of single words
             if "password" in words and "change" in words:
@@ -92,30 +89,10 @@ def main():
             if check==0:
                 print("Incorrect ID. Try again.")
 
-        def search_ticket(self):
-            check=0
-            search_id = int(input("Input ID of a ticket you want to view: "))
-            for i in tickets:
-                for key, value in i.items():
-                    if key == search_id:
-                        check=1
-                        print("Displaying ticket info:")
-                        print("ID: ", search_id)
-                        print("Staff ID: ", value["Staff ID"])
-                        print("Creator: ", value["Creator Name"])
-                        print("Email: ", value["Contact Email"])
-                        print("Ticket description: ", value["Description"])
-                        print("Status: ", value["Status"])
-                        print("Response: ", value["Response"])
             if check==0:
                 print("Ticket not found.")
     #due to how the tickets are put into the list, the easiest way to get info would be requesting to print whatever is on the spot corresponding to requested ID-2001. Ex: ID 2005 within the array would be in the position 2005-2001, so position 4
 
-        def display_statistics(self):
-            print("Displaying ticket statistics:")
-            print("Total number of tickets: ", len(tickets))
-            print("Total number of solved tickets: ", len(closed_tickets))
-            print("Total number of unsolved tickets: ", len(open_tickets))
 
         def change_status(self):
             check=0
@@ -138,6 +115,35 @@ def main():
                                 open_tickets.append(i)
             if check==0:
                 print("Incorrect ID. Try again.")
+
+    class Search:
+        def __init__(self, tickets, open_tickets, closed_tickets):
+            self.tickets=tickets
+            self.open_tickets=open_tickets
+            self.closed_tickets=closed_tickets
+
+        def display_statistics(self):
+            print("Displaying ticket statistics:")
+            print("Total number of tickets: ", len(tickets))
+            print("Total number of solved tickets: ", len(closed_tickets))
+            print("Total number of unsolved tickets: ", len(open_tickets))
+
+        def search_ticket(self):
+            check=0
+            search_id = int(input("Input ID of a ticket you want to view: "))
+            for i in tickets:
+                for key, value in i.items():
+                    if key == search_id:
+                        check=1
+                        print("Displaying ticket info:")
+                        print("ID: ", search_id)
+                        print("Staff ID: ", value["Staff ID"])
+                        print("Creator: ", value["Creator Name"])
+                        print("Email: ", value["Contact Email"])
+                        print("Ticket description: ", value["Description"])
+                        print("Status: ", value["Status"])
+                        print("Response: ", value["Response"])
+
         def view_all(self):
             query=input("What tickets would you like to view ? (all, closed, open): ")
             if query=="all":
@@ -215,7 +221,8 @@ def main():
                 new.add_new()
                 inpt=0
             elif inpt==2:
-                new.search_ticket()
+                search=Search(tickets,open_tickets,closed_tickets)
+                search.search_ticket()
                 inpt=0
             elif inpt==3:
                 new.change_status()
@@ -224,10 +231,12 @@ def main():
                 new.respond()
                 inpt=0
             elif inpt==5:
-                new.view_all()
+                search = Search(tickets, open_tickets, closed_tickets)
+                search.view_all()
                 inpt=0
             elif inpt==6:
-                new.display_statistics()
+                search = Search(tickets, open_tickets, closed_tickets)
+                search.display_statistics()
                 inpt=0
         print(" ")
         quest=input("Do you want to do anything else ? (y/n) ")
