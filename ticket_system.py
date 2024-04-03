@@ -236,6 +236,3 @@ def main():
         if quest=="n":
             end=1
 main()
-
-
-
