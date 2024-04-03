@@ -199,7 +199,7 @@ def main():
         print("What would you like to do? (input option number)")
         print(" ")
         print("1. Create new ticket.")
-        print("----Support staff options ahead for testing purposes only----")
+        print("----Support staff options ahead, for testing purposes only----")
         print("2. Search ticket by ID")
         print("3. Open/close ticket")
         print("4. Respond to ticket")
@@ -207,7 +207,7 @@ def main():
         print("6. Display statistics")
         print("--------------------------------------------------")
         inpt=int(input("Input your choice: "))
-        while inpt>7 or inpt<0:
+        while inpt>6 or inpt<0:
             inpt = int(input("Wrong option. Please, try again: "))
         while inpt<7 and inpt>0:
             if inpt==1:
