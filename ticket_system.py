@@ -71,17 +71,12 @@ def main():
         def respond(self):
             check=0
             search_id = int(input("Input ID of a ticket you want to respond to: "))
-    #Inputting ID to search for
             for i in open_tickets:
-                #checks every item in the array
                 for key, value in i.items():
-    #checks every key and value within integrated dictionary
                     if key == search_id:
-    #checks if a key corresponds to the search request
                         value["Response"]=input("Input your response: ")
                         check=1
                         question=input("Do you want to close the ticket ? (y/n): ")
-    #checks if responder wants to close the ticket
                         if question=="y":
                             value["Status"]="Closed"
                             closed_tickets.append(i)
@@ -91,8 +86,6 @@ def main():
 
             if check==0:
                 print("Ticket not found.")
-    #due to how the tickets are put into the list, the easiest way to get info would be requesting to print whatever is on the spot corresponding to requested ID-2001. Ex: ID 2005 within the array would be in the position 2005-2001, so position 4
-
 
         def change_status(self):
             check=0
@@ -101,7 +94,7 @@ def main():
                 for key, value in i.items():
                     if key == search_id:
                         check=1
-                        if value["Status"] == "Open":
+                        if value["Status"] == "Open" or value["Status"] == "Re-Opened":
                             question = input("Do you want to close the ticket ? (y/n): ")
                             if question == "y":
                                 value["Status"] = "Closed"
@@ -110,7 +103,7 @@ def main():
                         elif value["Status"] == "Closed":
                             question = input("Do you want to re-open the ticket ? (y/n): ")
                             if question == "y":
-                                value["Status"] = "Open"
+                                value["Status"] = "Re-Opened"
                                 closed_tickets.remove(i)
                                 open_tickets.append(i)
             if check==0:
